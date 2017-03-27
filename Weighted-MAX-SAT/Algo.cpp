@@ -18,15 +18,24 @@ long int Algo::evaluer(Solution* solution, Instance instance)
 
 Solution Algo::generateRandomSolution(int nombreVariables)
 {
-	vector<int> valeurs(nombreVariables);
+	vector<Literal> litteraux(nombreVariables);
 	int tab[2];
 	tab[0] = -1;
 	tab[1] = 1;
-	for (size_t i = 0; i< valeurs.size(); i++)
+	for (size_t i = 0; i< litteraux.size(); i++)
 	{
+		litteraux[i].numVar = i + 1;
 		int pos = rand() % 2;
-		valeurs[i] = tab[pos] * (i + 1);
+		if (i == 0)
+		{
+			litteraux[i].value = true;
+		}
+		else
+		{
+			litteraux[i].value = false;
+		}
+		litteraux[i].poidsEngendre = 0;
 	}
-	Solution solution(valeurs);
+	Solution solution(litteraux);
 	return solution;
 }

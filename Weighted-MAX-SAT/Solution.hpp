@@ -4,23 +4,29 @@
 #include <vector>
 #include "Instance.hpp"
 
+struct Literal
+{
+	int numVar;
+	bool value;
+	int poidsEngendre;
+};
+
 class Solution
 {
 	private:
-		std::vector<int> valeurs;				//literaux
+		std::vector<Literal> litteraux;				//literaux
 		long int performance; //A MAXIMISER
-		std::vector<int> poidsEngendresParLiteraux;
 	public:
 		Solution();
-		Solution(std::vector<int> val);
-		std::vector<int> getValeurs();
-		void setValeurs(std::vector<int> vals);
-		void setValeur(int pos, int val);
-		std::vector<int> getPoidsEngendresParLiteraux();
+		Solution(std::vector<Literal> litteraux);
+		std::vector<Literal> getLiterals();
+		void setLiterals(std::vector<Literal> litteraux);
+		void setLiteral(int pos, Literal literal);
 		long int getPerformance();
 		void afficherSolution(bool avecPoids);
 		long int evaluerSolution( Instance instance);
-		void trierValeurs();       //Trier par valeurs absolues croissantes les littéraux
-		void trierValeursParPoidsEngendre();       //Trier par poids engendrés les littéraux
+		void trierLiteralsParNumVar();       //Trier par numVar croissant
+		void trierLiteralsParPoidsEngendre();       //Trier par poids engendrés les littéraux
+		int getSommePoids();
 };
 #endif

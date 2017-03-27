@@ -35,27 +35,40 @@ void AlgoRandom::run(Instance instance)
 		{
 			stop = true;
 		}
-		cout << "newPerf: " << newSolution.getPerformance() << ", bestPerf: "<< bestSolution.getPerformance() << endl;
+		cout << "#########################################" << endl;
 		cout << "#########################################" << endl;
 		bestSolution.afficherSolution(false);
-		cout << "Avec score de: " << bestSolution.getPerformance() << endl;
+		cout << "bestPerf: " << bestSolution.getPerformance() << endl;
+		cout << "#########################################" << endl;
+		newSolution.afficherSolution(false);
+		cout << "newPerf: " << newSolution.getPerformance() << endl;
 		cout << "Nombre d'evaluations: " << compteurEvaluation << endl;
+		cout << "#########################################" << endl;
 		cout << "#########################################" << endl;
 	}
 }
 
 Solution AlgoRandom::generateRandomSolution(int nombreVariables)
 {
-	vector<int> valeurs(nombreVariables);
+	vector<Literal> litteraux(nombreVariables);
 	int tab[2];
 	tab[0] = -1;
 	tab[1] = 1;
-	for (size_t i = 0; i< valeurs.size(); i++)
+	for (size_t i = 0; i< litteraux.size(); i++)
 	{
+		litteraux[i].numVar = i + 1;
 		int pos = rand() % 2;
-		valeurs[i] = tab[pos] * (i + 1);
+		if (pos == 0)
+		{
+			litteraux[i].value = true;
+		}
+		else
+		{
+			litteraux[i].value = false;
+		}
+		litteraux[i].poidsEngendre = 0;
 	}
-	Solution solution(valeurs);
+	Solution solution(litteraux);
 	return solution;
 }
 

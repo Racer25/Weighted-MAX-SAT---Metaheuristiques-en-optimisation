@@ -12,6 +12,7 @@
 #include "functions.hpp"
 #include "AlgoRandom.hpp"
 #include "AlgoDescente.hpp"
+#include "AlgoRS.hpp"
 
 using namespace std;
 
@@ -24,8 +25,14 @@ int main()
 	{
 		//instances_Weighted_MAX_SAT[i].afficherInstance();
 
-		AlgoDescente algoDescente(50);
-		algoDescente.run(instances_Weighted_MAX_SAT[i]);
+		//AlgoRandom algoAlea(10000);
+		//algoAlea.run(instances_Weighted_MAX_SAT[i]);
+
+		//AlgoDescente algoDescente(10000);
+		//algoDescente.run(instances_Weighted_MAX_SAT[i]);
+
+		AlgoRS algoRS(10000);
+		algoRS.run(instances_Weighted_MAX_SAT[i]);
 	}
 	
 	
@@ -35,16 +42,25 @@ int main()
 
 Solution generateRandomSolution(int nombreVariables)
 {
-	vector<int> valeurs(nombreVariables);
+	vector<Literal> litteraux(nombreVariables);
 	int tab[2];
 	tab[0] = -1;
 	tab[1] = 1;
-	for (size_t i=0; i< valeurs.size(); i++)
+	for (size_t i = 0; i< litteraux.size(); i++)
 	{
+		litteraux[i].numVar = i + 1;
 		int pos = rand() % 2;
-		valeurs[i] = tab[pos] * (i+1);
+		if (i == 0)
+		{
+			litteraux[i].value = true;
+		}
+		else
+		{
+			litteraux[i].value = false;
+		}
+		litteraux[i].poidsEngendre = 0;
 	}
-	Solution solution(valeurs);
+	Solution solution(litteraux);
 	return solution;
 }
 

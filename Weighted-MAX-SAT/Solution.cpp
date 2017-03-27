@@ -16,32 +16,26 @@ Solution::Solution()
 
 }
 
-Solution::Solution(vector<int> val)
+Solution::Solution(vector<Literal> lits)
 {
-	valeurs = val;
+	litteraux = lits;
 	performance = 0;
-	vector<int> pds(val.size());
-	poidsEngendresParLiteraux = pds;
+	vector<Literal> pds(lits);
 }
 
-vector<int> Solution::getValeurs()
+vector<Literal> Solution::getLiterals()
 {
-	return valeurs;
+	return litteraux;
 }
 
-void Solution::setValeurs(std::vector<int> vals)
+void Solution::setLiterals(std::vector<Literal> lits)
 {
-	valeurs = vals;
+	litteraux = lits;
 }
 
-void Solution::setValeur(int pos, int val)
+void Solution::setLiteral(int pos, Literal lit)
 {
-	valeurs[pos] = val;
-}
-
-std::vector<int> Solution::getPoidsEngendresParLiteraux()
-{
-	return poidsEngendresParLiteraux;
+	litteraux[pos] = lit;
 }
 
 long int Solution::getPerformance()
@@ -53,17 +47,17 @@ void Solution::afficherSolution(bool avecPoids)
 {
 	if (avecPoids)
 	{
-		for (size_t i = 0; i<valeurs.size(); i++)
+		for (size_t i = 0; i<litteraux.size(); i++)
 		{
-			cout << valeurs[i] << ":" << poidsEngendresParLiteraux[i] << "  ";
+			cout << litteraux[i].numVar << ":" << std::boolalpha << litteraux[i].value << ":" << litteraux[i].poidsEngendre << "  ";
 		}
 		cout << "\n";
 	}
 	else
 	{
-		for (size_t i = 0; i<valeurs.size(); i++)
+		for (size_t i = 0; i<litteraux.size(); i++)
 		{
-			cout << valeurs[i] << "  ";
+			cout << litteraux[i].numVar << ":" << std::boolalpha<< litteraux[i].value << "  ";
 		}
 		cout << "\n";
 	}
@@ -72,23 +66,22 @@ void Solution::afficherSolution(bool avecPoids)
 
 long int Solution::evaluerSolution(Instance instance)
 {
+	//On trie par numVar
+	trierLiteralsParNumVar();
 	long int res = 0;
 	vector < vector<int> > valeursParClause = instance.getValeursParClause();
+	//On parcourt les clauses
 	for (size_t i = 0; i<valeursParClause.size(); i++)
 	{
-		//cout << "Clause: " << i << endl;
 		bool clauseValide = false;
+		//on parcourt les valeurs de la clause courante
 		for (size_t j = 0; j<valeursParClause[i].size(); j++)
 		{
-			//cout << "Boucle2" << endl;
 			int literal = valeursParClause[i][j];
-			for (size_t k = 0; k<valeurs.size(); k++)
+			if (abs(literal) == litteraux[abs(literal)-1].numVar && ((literal < 0 && !litteraux[abs(literal) - 1].value) || (literal > 0 && litteraux[abs(literal) - 1].value)))
 			{
-				if (literal == valeurs[k])
-				{
-					clauseValide = true;
-					poidsEngendresParLiteraux[k] += instance.getPoids()[i];
-				}
+				clauseValide = true;
+				litteraux[abs(literal) - 1].poidsEngendre += instance.getPoids()[i];
 			}
 		}
 		if (clauseValide)
@@ -100,45 +93,49 @@ long int Solution::evaluerSolution(Instance instance)
 	return res;
 }
 
-bool compare(int i, int j)
+bool compare(Literal i, Literal j)
 {
-	return abs(i) < abs(j);
+	return i.numVar < j.numVar;
 }
 
-void Solution::trierValeurs()
+void Solution::trierLiteralsParNumVar()
 {
-	sort(valeurs.begin(), valeurs.end(), compare);
+	sort(litteraux.begin(), litteraux.end(), compare);
 }
 
-void Solution::trierValeursParPoidsEngendre()
+void Solution::trierLiteralsParPoidsEngendre()
 {
-	sort(valeurs.begin(), valeurs.end(), compare);
-	vector<int> valeursTriees(valeurs.size());
-	vector<int> poidsTries(poidsEngendresParLiteraux.size());
-	vector<int> copyValeurs(valeurs);
-	vector<int> copyPoids(poidsEngendresParLiteraux);
-	for (size_t i = 0; i<valeursTriees.size(); i++)
+	vector<Literal> literalTries(litteraux.size());
+	vector<Literal> copyLiterals(litteraux);
+	for (size_t i = 0; i<literalTries.size(); i++)
 	{
 		//Trouver mini
-		int min = copyValeurs[0];
+		Literal literalMin = copyLiterals[0];
 		int posMin = 0;
 		int pos = 0;
-		while (pos < (int)copyValeurs.size())
+		while (pos < (int)copyLiterals.size())
 		{
-			if (copyPoids[pos] < copyPoids[posMin])
+			if (copyLiterals[pos].poidsEngendre < copyLiterals[posMin].poidsEngendre)
 			{
-				min = copyValeurs[pos];
+				literalMin = copyLiterals[pos];
 				posMin = pos;
 			}
 			pos++;
 		}
 		//Affectation
-		valeursTriees[i] = min;
-		poidsTries[i] = copyPoids[posMin];
+		literalTries[i] = literalMin;
 
-		copyValeurs.erase(copyValeurs.begin() + posMin);
-		copyPoids.erase(copyPoids.begin() + posMin);
+		copyLiterals.erase(copyLiterals.begin() + posMin);
 	}
-	valeurs = valeursTriees;
-	poidsEngendresParLiteraux = poidsTries;
+	litteraux = literalTries;
+}
+
+int Solution::getSommePoids()
+{
+	int sommePoids= 0;
+	for (size_t i = 1; i<litteraux.size(); i++)
+	{
+		sommePoids += litteraux[i].poidsEngendre;
+	}
+	return sommePoids;
 }

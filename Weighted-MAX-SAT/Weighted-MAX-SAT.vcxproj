@@ -150,6 +150,7 @@
     <ClCompile Include="Algo.hpp" />
     <ClCompile Include="AlgoDescente.cpp" />
     <ClCompile Include="AlgoRandom.cpp" />
+    <ClCompile Include="AlgoRS.cpp" />
     <ClCompile Include="Instance.cpp" />
     <ClCompile Include="MainClass.cpp" />
     <ClCompile Include="sat_io.cpp" />
@@ -158,6 +159,7 @@
   <ItemGroup>
     <ClInclude Include="AlgoDescente.hpp" />
     <ClInclude Include="AlgoRandom.hpp" />
+    <ClInclude Include="AlgoRS.hpp" />
     <ClInclude Include="functions.hpp" />
     <ClInclude Include="Instance.hpp" />
     <ClInclude Include="Solution.hpp" />
