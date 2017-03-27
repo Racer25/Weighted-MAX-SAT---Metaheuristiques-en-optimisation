@@ -37,7 +37,7 @@ void AlgoRandom::run(Instance instance)
 		}
 		cout << "newPerf: " << newSolution.getPerformance() << ", bestPerf: "<< bestSolution.getPerformance() << endl;
 		cout << "#########################################" << endl;
-		bestSolution.afficherSolution();
+		bestSolution.afficherSolution(false);
 		cout << "Avec score de: " << bestSolution.getPerformance() << endl;
 		cout << "Nombre d'evaluations: " << compteurEvaluation << endl;
 		cout << "#########################################" << endl;

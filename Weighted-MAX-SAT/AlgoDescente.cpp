@@ -25,7 +25,7 @@ void AlgoDescente::run(Instance instance)
 	while (!stop)
 	{
 		//Voisinage...
-		Solution newSolution = generateRandomSolution(instance.getNombreVariables());
+		Solution newSolution = trouverVoisin(bestSolution);
 
 		Algo::evaluer(&newSolution, instance);
 		if (newSolution.getPerformance() > bestSolution.getPerformance())
@@ -37,10 +37,11 @@ void AlgoDescente::run(Instance instance)
 		{
 			stop = true;
 		}
+		//newSolution.trierValeurs();
+		newSolution.afficherSolution(false);
 		cout << "newPerf: " << newSolution.getPerformance() << ", bestPerf: " << bestSolution.getPerformance() << endl;
 		cout << "#########################################" << endl;
-		bestSolution.afficherSolution();
-		cout << "Avec score de: " << bestSolution.getPerformance() << endl;
+		bestSolution.afficherSolution(false);
 		cout << "Nombre d'evaluations: " << compteurEvaluation << endl;
 		cout << "#########################################" << endl;
 	}
@@ -61,8 +62,20 @@ Solution AlgoDescente::generateRandomSolution(int nombreVariables)
 	return solution;
 }
 
-long int Algo::evaluer(Solution* solution, Instance instance)
+long int AlgoDescente::evaluer(Solution* solution, Instance instance)
 {
 	compteurEvaluation++;
 	return (*solution).evaluerSolution(instance);
+}
+
+Solution AlgoDescente::trouverVoisin(Solution solution)
+{
+	solution.trierValeursParPoidsEngendre();
+	Solution voisin(solution);
+	vector<int> valeursVoisins = voisin.getValeurs();
+	//On va changer le signe (On applique un NON) d'une des 10 pires valeurs dans la solution
+	int pos = rand() % 10;
+	cout << "val passe de " << valeursVoisins[pos] << " à " << valeursVoisins[pos] * -1 << endl;
+	voisin.setValeur(pos, valeursVoisins[pos]*-1);
+	return voisin;
 }

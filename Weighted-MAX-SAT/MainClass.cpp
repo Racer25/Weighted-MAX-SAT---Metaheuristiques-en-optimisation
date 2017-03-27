@@ -11,6 +11,7 @@
 #include "Solution.hpp"
 #include "functions.hpp"
 #include "AlgoRandom.hpp"
+#include "AlgoDescente.hpp"
 
 using namespace std;
 
@@ -23,8 +24,8 @@ int main()
 	{
 		//instances_Weighted_MAX_SAT[i].afficherInstance();
 
-		AlgoRandom algoRandom(10000);
-		algoRandom.run(instances_Weighted_MAX_SAT[i]);
+		AlgoDescente algoDescente(50);
+		algoDescente.run(instances_Weighted_MAX_SAT[i]);
 	}
 	
 	
