@@ -146,6 +146,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Algo.cpp" />
+    <ClCompile Include="Algo.hpp" />
+    <ClCompile Include="AlgoDescente.cpp" />
+    <ClCompile Include="AlgoRandom.cpp" />
+    <ClCompile Include="Instance.cpp" />
+    <ClCompile Include="MainClass.cpp" />
+    <ClCompile Include="sat_io.cpp" />
+    <ClCompile Include="Solution.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AlgoDescente.hpp" />
+    <ClInclude Include="AlgoRandom.hpp" />
+    <ClInclude Include="functions.hpp" />
+    <ClInclude Include="Instance.hpp" />
+    <ClInclude Include="Solution.hpp" />
+    <ClInclude Include="sat_io.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
