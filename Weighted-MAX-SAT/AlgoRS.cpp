@@ -25,11 +25,12 @@ void AlgoRS::run(Instance instance)
 	Solution bestSolution = uneSolution;
 	evaluer(&bestSolution, instance);
 	double temperatureIni = 100;
+	int dureeTemperature = instance.getNombreClauses()/10;
 	double temperature = temperatureIni;
 
 	while (!stop)
 	{
-		for (int dureeTemperature =0; dureeTemperature< 10; dureeTemperature++)
+		for (int repetition =0; repetition< dureeTemperature; repetition++)
 		{
 			//On prélève 1 voisin
 			Solution newSolution = trouverVoisin(uneSolution);
@@ -46,8 +47,9 @@ void AlgoRS::run(Instance instance)
 			}
 			else
 			{
-				double random = rand() / RAND_MAX;
-				if (random < exp(-(newSolution.getPerformance() - uneSolution.getPerformance()) / temperature))
+				double random = (double)rand() / (double)RAND_MAX;
+				double val = exp(-((double)uneSolution.getPerformance() - (double)newSolution.getPerformance()) / temperature);
+				if (random < val)
 				{
 					uneSolution = newSolution;
 				}
@@ -72,36 +74,6 @@ void AlgoRS::run(Instance instance)
 			stop = true;
 		}
 	}
-}
-
-Solution AlgoRS::generateRandomSolution(int nombreVariables)
-{
-	vector<Literal> litteraux(nombreVariables);
-	int tab[2];
-	tab[0] = -1;
-	tab[1] = 1;
-	for (size_t i = 0; i< litteraux.size(); i++)
-	{
-		litteraux[i].numVar = i + 1;
-		int pos = rand() % 2;
-		if (i == 0)
-		{
-			litteraux[i].value = true;
-		}
-		else
-		{
-			litteraux[i].value = false;
-		}
-		litteraux[i].poidsEngendre = 0;
-	}
-	Solution solution(litteraux);
-	return solution;
-}
-
-long int AlgoRS::evaluer(Solution* solution, Instance instance)
-{
-	compteurEvaluation++;
-	return (*solution).evaluerSolution(instance);
 }
 
 Solution AlgoRS::trouverVoisin(Solution solution)

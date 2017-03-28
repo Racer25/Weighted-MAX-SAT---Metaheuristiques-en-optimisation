@@ -7,7 +7,5 @@ class AlgoRandom : public Algo
 	public:
 		AlgoRandom(int nbEvaluationMax);
 		void run(Instance instance);
-		Solution generateRandomSolution(int nombreVariables);
-		long int evaluer(Solution* solution, Instance instance);
 };
 #endif

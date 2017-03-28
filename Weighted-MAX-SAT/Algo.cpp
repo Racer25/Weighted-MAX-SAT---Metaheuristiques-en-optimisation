@@ -10,12 +10,6 @@
 #include <vector>
 using namespace std;
 
-long int Algo::evaluer(Solution* solution, Instance instance)
-{
-	compteurEvaluation++;
-	return (*solution).evaluerSolution(instance);
-}
-
 Solution Algo::generateRandomSolution(int nombreVariables)
 {
 	vector<Literal> litteraux(nombreVariables);
@@ -38,4 +32,10 @@ Solution Algo::generateRandomSolution(int nombreVariables)
 	}
 	Solution solution(litteraux);
 	return solution;
+}
+
+long int Algo::evaluer(Solution* solution, Instance instance)
+{
+	compteurEvaluation++;
+	return (*solution).evaluerSolution(instance);
 }

@@ -7,8 +7,6 @@ class AlgoDescente : public Algo
 	public:
 		AlgoDescente(int nbEvaluationMax);
 		void run(Instance instance);
-		Solution generateRandomSolution(int nombreVariables);
-		long int evaluer(Solution* solution, Instance instance);
 		Solution trouverVoisin(Solution solutiion);
 };
 #endif

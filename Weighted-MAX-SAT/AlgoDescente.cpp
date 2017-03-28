@@ -19,7 +19,6 @@ AlgoDescente::AlgoDescente(int nbEvaluationMax)
 void AlgoDescente::run(Instance instance)
 {
 	bool stop = false;
-
 	Solution bestSolution = generateRandomSolution(instance.getNombreVariables());
 	evaluer(&bestSolution, instance);
 	while (!stop)
@@ -37,7 +36,7 @@ void AlgoDescente::run(Instance instance)
 		{
 			stop = true;
 		}
-		//newSolution.trierValeurs();
+		
 		cout << "#########################################" << endl;
 		cout << "#########################################" << endl;
 		bestSolution.afficherSolution(false);
@@ -49,36 +48,6 @@ void AlgoDescente::run(Instance instance)
 		cout << "#########################################" << endl;
 		cout << "#########################################" << endl;
 	}
-}
-
-Solution AlgoDescente::generateRandomSolution(int nombreVariables)
-{
-	vector<Literal> litteraux(nombreVariables);
-	int tab[2];
-	tab[0] = -1;
-	tab[1] = 1;
-	for (size_t i = 0; i< litteraux.size(); i++)
-	{
-		litteraux[i].numVar = i+1;
-		int pos = rand() % 2;
-		if (i==0)
-		{
-			litteraux[i].value = true;
-		}
-		else
-		{
-			litteraux[i].value = false;
-		}
-		litteraux[i].poidsEngendre = 0;
-	}
-	Solution solution(litteraux);
-	return solution;
-}
-
-long int AlgoDescente::evaluer(Solution* solution, Instance instance)
-{
-	compteurEvaluation++;
-	return (*solution).evaluerSolution(instance);
 }
 
 Solution AlgoDescente::trouverVoisin(Solution solution)

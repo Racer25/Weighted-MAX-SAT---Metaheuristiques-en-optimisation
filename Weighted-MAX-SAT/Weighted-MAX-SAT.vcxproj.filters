@@ -13,12 +13,21 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\Algos">
+      <UniqueIdentifier>{0a0323cc-065a-44ff-abe9-510b40993a50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Algos">
+      <UniqueIdentifier>{8f9972f0-2166-4922-9c0f-d314b2ff37ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\utils">
+      <UniqueIdentifier>{6511b7ea-5e5a-46d7-82fd-0792b7e919cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\utils">
+      <UniqueIdentifier>{427a1c2e-da6f-43ff-86b5-f3dcebcb773f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainClass.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="sat_io.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="Instance.cpp">
@@ -27,43 +36,49 @@
     <ClCompile Include="Solution.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Algo.hpp">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClCompile>
-    <ClCompile Include="AlgoRandom.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="Algo.cpp">
-      <Filter>Fichiers sources</Filter>
+      <Filter>Fichiers sources\Algos</Filter>
     </ClCompile>
     <ClCompile Include="AlgoDescente.cpp">
-      <Filter>Fichiers sources</Filter>
+      <Filter>Fichiers sources\Algos</Filter>
+    </ClCompile>
+    <ClCompile Include="AlgoRandom.cpp">
+      <Filter>Fichiers sources\Algos</Filter>
     </ClCompile>
     <ClCompile Include="AlgoRS.cpp">
-      <Filter>Fichiers sources</Filter>
+      <Filter>Fichiers sources\Algos</Filter>
+    </ClCompile>
+    <ClCompile Include="sat_io.cpp">
+      <Filter>Fichiers sources\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="AlgoAG.cpp">
+      <Filter>Fichiers sources\Algos</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="sat_io.hpp">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="functions.hpp">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="Instance.hpp">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="Solution.hpp">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="AlgoRandom.hpp">
-      <Filter>Fichiers d%27en-tête</Filter>
+    <ClInclude Include="Algo.hpp">
+      <Filter>Fichiers d%27en-tête\Algos</Filter>
     </ClInclude>
     <ClInclude Include="AlgoDescente.hpp">
-      <Filter>Fichiers d%27en-tête</Filter>
+      <Filter>Fichiers d%27en-tête\Algos</Filter>
+    </ClInclude>
+    <ClInclude Include="AlgoRandom.hpp">
+      <Filter>Fichiers d%27en-tête\Algos</Filter>
     </ClInclude>
     <ClInclude Include="AlgoRS.hpp">
-      <Filter>Fichiers d%27en-tête</Filter>
+      <Filter>Fichiers d%27en-tête\Algos</Filter>
+    </ClInclude>
+    <ClInclude Include="sat_io.hpp">
+      <Filter>Fichiers d%27en-tête\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="AlgoAG.hpp">
+      <Filter>Fichiers d%27en-tête\Algos</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
