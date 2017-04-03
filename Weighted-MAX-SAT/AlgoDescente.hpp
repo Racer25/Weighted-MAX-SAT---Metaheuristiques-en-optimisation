@@ -5,7 +5,7 @@
 class AlgoDescente : public Algo
 {
 	public:
-		AlgoDescente(int nbEvaluationMax);
+		AlgoDescente(int nbEvaluationMax, int nbRepetitions);
 		void run(Instance instance);
 		Solution trouverVoisin(Solution solutiion);
 };

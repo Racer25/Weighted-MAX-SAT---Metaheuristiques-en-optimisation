@@ -13,7 +13,13 @@ using namespace std;
 
 Solution::Solution()
 {
+}
 
+Solution::Solution(int nombreLitteraux)
+{
+	vector<Literal> lits(nombreLitteraux);
+	litteraux = lits;
+	performance = 0;
 }
 
 Solution::Solution(vector<Literal> lits)
@@ -138,4 +144,20 @@ int Solution::getSommePoids()
 		sommePoids += litteraux[i].poidsEngendre;
 	}
 	return sommePoids;
+}
+
+string Solution::toString()
+{
+	string maString = "0=Faux, 1=Vrai\n\n";
+	for (size_t i = 0; i<litteraux.size(); i++)
+	{
+		maString += "x"+to_string(litteraux[i].numVar) + ":" + to_string(litteraux[i].value) + "\t";
+		if ((i+1)%15==0)
+		{
+			maString += "\n";
+		}
+	}
+	maString += "\n\nPerformance: " + to_string(performance);
+	
+	return maString;
 }

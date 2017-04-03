@@ -18,6 +18,7 @@ class Solution
 		long int performance; //A MAXIMISER
 	public:
 		Solution();
+		Solution(int nombreLitteraux);
 		Solution(std::vector<Literal> litteraux);
 		std::vector<Literal> getLiterals();
 		void setLiterals(std::vector<Literal> litteraux);
@@ -26,7 +27,8 @@ class Solution
 		void afficherSolution(bool avecPoids);
 		long int evaluerSolution( Instance instance);
 		void trierLiteralsParNumVar();       //Trier par numVar croissant
-		void trierLiteralsParPoidsEngendre();       //Trier par poids engendrés les littéraux
+		void trierLiteralsParPoidsEngendre();       //Trier par poids engendrés croissants les littéraux
 		int getSommePoids();
+		std::string toString();
 };
 #endif

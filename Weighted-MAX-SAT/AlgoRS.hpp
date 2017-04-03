@@ -5,7 +5,7 @@
 class AlgoRS : public Algo
 {
 public:
-	AlgoRS(int nbEvaluationMax);
+	AlgoRS(int nbEvaluationMax,int nbRepetitions);
 	void run(Instance instance);
 	Solution trouverVoisin(Solution solutiion);
 };

@@ -10,70 +10,80 @@
 #include <vector>
 using namespace std;
 
-AlgoRS::AlgoRS(int nbEvaluationMax)
+AlgoRS::AlgoRS(int nbEvaluationMax, int nbRepetitions)
 {
 	nombreEvaluationMax = nbEvaluationMax;
+	nombreRepetitions = nbRepetitions;
 	compteurEvaluation = 0;
 }
 
 void AlgoRS::run(Instance instance)
 {
-	bool stop = false;
-
-	//Initialisation
-	Solution uneSolution= generateRandomSolution(instance.getNombreVariables());
-	Solution bestSolution = uneSolution;
-	evaluer(&bestSolution, instance);
-	double temperatureIni = 100;
-	int dureeTemperature = instance.getNombreClauses()/10;
-	double temperature = temperatureIni;
-
-	while (!stop)
+	for (int repetition = 1; repetition<=nombreRepetitions; repetition++)
 	{
-		for (int repetition =0; repetition< dureeTemperature; repetition++)
+		compteurEvaluation = 0;
+		bool stop = false;
+
+		//Initialisation
+		Solution uneSolution = generateRandomSolution(instance.getNombreVariables());
+		uneSolution.afficherSolution(false);
+		Solution bestSolution = uneSolution;
+		evaluer(&bestSolution, instance);
+		double temperatureIni = 100;
+		int dureeTemperature = instance.getNombreClauses() / 10;
+		double temperature = temperatureIni;
+
+		while (!stop)
 		{
-			//On prélève 1 voisin
-			Solution newSolution = trouverVoisin(uneSolution);
-
-			evaluer(&newSolution, instance);
-			if (newSolution.getPerformance() > uneSolution.getPerformance())
+			for (int repetition = 0; repetition< dureeTemperature && !stop; repetition++)
 			{
-				uneSolution = newSolution;
-				if (uneSolution.getPerformance() > bestSolution.getPerformance())
-				{
-					bestSolution = uneSolution;
-				}
+				//On prélève 1 voisin
+				Solution newSolution = trouverVoisin(uneSolution);
 
-			}
-			else
-			{
-				double random = (double)rand() / (double)RAND_MAX;
-				double val = exp(-((double)uneSolution.getPerformance() - (double)newSolution.getPerformance()) / temperature);
-				if (random < val)
+				evaluer(&newSolution, instance);
+				if (newSolution.getPerformance() > uneSolution.getPerformance())
 				{
 					uneSolution = newSolution;
+					if (uneSolution.getPerformance() > bestSolution.getPerformance())
+					{
+						bestSolution = uneSolution;
+					}
+
+				}
+				else
+				{
+					double random = (double)rand() / (double)RAND_MAX;
+					double val = exp(-((double)uneSolution.getPerformance() - (double)newSolution.getPerformance()) / temperature);
+					if (random < val)
+					{
+						uneSolution = newSolution;
+					}
+				}
+				cout << "#########################################" << endl;
+				cout << "#########################################" << endl;
+				bestSolution.afficherSolution(false);
+				cout << "bestPerf: " << bestSolution.getPerformance() << endl;
+				cout << "#########################################" << endl;
+				newSolution.afficherSolution(false);
+				cout << "newPerf: " << newSolution.getPerformance() << endl;
+				cout << "Nombre d'evaluations: " << compteurEvaluation << endl;
+				cout << "#########################################" << endl;
+				cout << "#########################################" << endl;
+
+				if (compteurEvaluation > nombreEvaluationMax)
+				{
+					stop = true;
 				}
 			}
-			cout << "#########################################" << endl;
-			cout << "#########################################" << endl;
-			bestSolution.afficherSolution(false);
-			cout << "bestPerf: " << bestSolution.getPerformance() << endl;
-			cout << "#########################################" << endl;
-			newSolution.afficherSolution(false);
-			cout << "newPerf: " << newSolution.getPerformance() << endl;
-			cout << "Nombre d'evaluations: " << compteurEvaluation << endl;
-			cout << "#########################################" << endl;
-			cout << "#########################################" << endl;
-		}
-		
 
-		temperature *= 0.9;
 
-		if (compteurEvaluation > nombreEvaluationMax)
-		{
-			stop = true;
+			temperature *= 0.9;
+
+
 		}
+		Algo::extractSolutionToFile("AlgoRS", repetition, bestSolution, instance);
 	}
+
 }
 
 Solution AlgoRS::trouverVoisin(Solution solution)

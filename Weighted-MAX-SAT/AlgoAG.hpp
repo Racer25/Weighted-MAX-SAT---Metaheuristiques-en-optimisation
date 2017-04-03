@@ -6,17 +6,22 @@ using namespace std;
 class AlgoAG : public Algo
 {
 public:
-	AlgoAG(int nbEvaluationMax);
+	AlgoAG(int nbEvaluationMax, int nbRepetitions);
 	void run(Instance instance);
 	vector<Solution> generateRandomPopulation(int taillePopulation, int nombreVariables);
-	void evaluerPopulation(vector<Solution*> solutions, Instance instance);
+	void evaluerPopulation(vector<Solution> *solutions, Instance instance);
 	Solution getBestSolutionInPopulation(vector<Solution> population);
-	vector<Solution> selectionParents(vector<Solution> population); //Selectionne les parents allant se reproduire
-	vector<Solution> croisement(vector<Solution> parents); //Créer les enfants des parents
-	void mutation(vector<Solution*> solutions); //Applique des mutations au litteraux d'une population (enfants + population OU Parents)
-	vector<Solution> remplacement(vector<Solution> population);//Prends une population de taille trop grande et la réduit aux nombres d'individus fixés (50?)
+	long int getSommePerformances(vector<Solution> population);
+	Solution selectionParent(vector<Solution> population); //Selectionne un parent allant se reproduire
+	Solution selectionParentRang(vector<Solution> population); //Selectionne un parent allant se reproduire
+	Solution AlgoAG::reproductionBinaire(Solution parent1, Solution parent2);
+	Solution reproduction(Solution parent1, Solution parent2);//Produit un enfant à partir de 2 parents
+	void mutation(Solution* solution); //Applique des mutations au litteraux d'une population (enfants + population OU Parents)
+	vector<Solution> remplacement(vector<Solution> parents, vector<Solution> enfants);//Prends les enfants et les parents et selectionne les survivants
+	vector<Solution> remplacementRang(vector<Solution> parents, vector<Solution> enfants);//Prends les enfants et les parents et selectionne les survivants
 
 	vector<Solution> pointeursVersValeurs(vector<Solution*> populationPointeurs);
 	vector<Solution*> valeursVersPointeurs(vector<Solution> population);
+	vector<Solution> trierPopulation(vector<Solution> population);
 };
 #endif

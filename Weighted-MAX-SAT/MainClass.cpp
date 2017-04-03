@@ -12,6 +12,7 @@
 #include "AlgoRandom.hpp"
 #include "AlgoDescente.hpp"
 #include "AlgoRS.hpp"
+#include "AlgoAG.hpp"
 
 using namespace std;
 
@@ -19,19 +20,23 @@ int main()
 {
 	srand(time(NULL));
 	vector<Instance> instances_Weighted_MAX_SAT = recupererInstances();
-
+	int nombreIterationMAX = 50;
+	int nombreRepetitions = 5;
 	for (size_t i=0; i<instances_Weighted_MAX_SAT.size(); i++)
 	{
 		//instances_Weighted_MAX_SAT[i].afficherInstance();
 
-		//AlgoRandom algoAlea(10000);
+		//AlgoRandom algoAlea(nombreIterationMAX, nombreRepetitions);
 		//algoAlea.run(instances_Weighted_MAX_SAT[i]);
 
-		//AlgoDescente algoDescente(10000);
+		//AlgoDescente algoDescente(nombreIterationMAX, nombreRepetitions);
 		//algoDescente.run(instances_Weighted_MAX_SAT[i]);
 
-		AlgoRS algoRS(10000);
-		algoRS.run(instances_Weighted_MAX_SAT[i]);
+		//AlgoRS algoRS(nombreIterationMAX, nombreRepetitions);
+		//algoRS.run(instances_Weighted_MAX_SAT[i]);
+
+		AlgoAG algoAG(nombreIterationMAX, nombreRepetitions);
+		algoAG.run(instances_Weighted_MAX_SAT[i]);
 	}
 	
 	

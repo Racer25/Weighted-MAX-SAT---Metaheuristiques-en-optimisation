@@ -10,43 +10,49 @@
 #include <vector>
 using namespace std;
 
-AlgoDescente::AlgoDescente(int nbEvaluationMax)
+AlgoDescente::AlgoDescente(int nbEvaluationMax, int nbRepetitions)
 {
 	nombreEvaluationMax = nbEvaluationMax;
+	nombreRepetitions = nbRepetitions;
 	compteurEvaluation = 0;
 }
 
 void AlgoDescente::run(Instance instance)
 {
-	bool stop = false;
-	Solution bestSolution = generateRandomSolution(instance.getNombreVariables());
-	evaluer(&bestSolution, instance);
-	while (!stop)
+	for (int repetition = 1; repetition <= nombreRepetitions; repetition++)
 	{
-		//On prélève 1 voisin
-		Solution newSolution = trouverVoisin(bestSolution);
-
-		evaluer(&newSolution, instance);
-		if (newSolution.getPerformance() > bestSolution.getPerformance())
+		compteurEvaluation = 0;
+		bool stop = false;
+		Solution bestSolution = generateRandomSolution(instance.getNombreVariables());
+		evaluer(&bestSolution, instance);
+		while (!stop)
 		{
-			bestSolution = newSolution;
-		}
+			//On prélève 1 voisin
+			Solution newSolution = trouverVoisin(bestSolution);
 
-		if (compteurEvaluation > nombreEvaluationMax)
-		{
-			stop = true;
+			evaluer(&newSolution, instance);
+			if (newSolution.getPerformance() > bestSolution.getPerformance())
+			{
+				bestSolution = newSolution;
+			}
+
+			if (compteurEvaluation > nombreEvaluationMax)
+			{
+				stop = true;
+			}
+
+			cout << "#########################################" << endl;
+			cout << "#########################################" << endl;
+			bestSolution.afficherSolution(false);
+			cout << "bestPerf: " << bestSolution.getPerformance() << endl;
+			cout << "#########################################" << endl;
+			newSolution.afficherSolution(false);
+			cout << "newPerf: " << newSolution.getPerformance() << endl;
+			cout << "Nombre d'evaluations: " << compteurEvaluation << endl;
+			cout << "#########################################" << endl;
+			cout << "#########################################" << endl;
 		}
-		
-		cout << "#########################################" << endl;
-		cout << "#########################################" << endl;
-		bestSolution.afficherSolution(false);
-		cout << "bestPerf: " << bestSolution.getPerformance() << endl;
-		cout << "#########################################" << endl;
-		newSolution.afficherSolution(false);
-		cout << "newPerf: " << newSolution.getPerformance() << endl;
-		cout << "Nombre d'evaluations: " << compteurEvaluation << endl;
-		cout << "#########################################" << endl;
-		cout << "#########################################" << endl;
+		Algo::extractSolutionToFile("AlgoDescente", repetition, bestSolution, instance);
 	}
 }
 

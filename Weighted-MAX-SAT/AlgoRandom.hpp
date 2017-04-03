@@ -5,7 +5,7 @@
 class AlgoRandom : public Algo
 {
 	public:
-		AlgoRandom(int nbEvaluationMax);
+		AlgoRandom(int nbEvaluationMax, int nbRepetitions);
 		void run(Instance instance);
 };
 #endif
