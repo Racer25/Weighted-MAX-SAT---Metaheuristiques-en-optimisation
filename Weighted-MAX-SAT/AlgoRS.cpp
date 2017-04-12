@@ -15,18 +15,21 @@ AlgoRS::AlgoRS(int nbEvaluationMax, int nbRepetitions)
 	nombreEvaluationMax = nbEvaluationMax;
 	nombreRepetitions = nbRepetitions;
 	compteurEvaluation = 0;
+	performanceMoyenneFinale = 0.0;
 }
 
 void AlgoRS::run(Instance instance)
 {
 	for (int repetition = 1; repetition<=nombreRepetitions; repetition++)
 	{
+		cout << "Instance:" << instance.getNom() << endl;
+		cout << "AlgoRecuit--" << "Repetition " << repetition << "--NbEvaluationMax=" << nombreEvaluationMax << endl;
 		compteurEvaluation = 0;
 		bool stop = false;
 
 		//Initialisation
 		Solution uneSolution = generateRandomSolution(instance.getNombreVariables());
-		uneSolution.afficherSolution(false);
+		//uneSolution.afficherSolution(false);
 		Solution bestSolution = uneSolution;
 		evaluer(&bestSolution, instance);
 		double temperatureIni = 100;
@@ -59,6 +62,7 @@ void AlgoRS::run(Instance instance)
 						uneSolution = newSolution;
 					}
 				}
+				/*
 				cout << "#########################################" << endl;
 				cout << "#########################################" << endl;
 				bestSolution.afficherSolution(false);
@@ -69,21 +73,21 @@ void AlgoRS::run(Instance instance)
 				cout << "Nombre d'evaluations: " << compteurEvaluation << endl;
 				cout << "#########################################" << endl;
 				cout << "#########################################" << endl;
+				*/
 
 				if (compteurEvaluation > nombreEvaluationMax)
 				{
 					stop = true;
 				}
 			}
-
-
 			temperature *= 0.9;
-
-
 		}
+		cout << "#########################################" << endl;
+		cout << "Meilleure Performance de la repetition: " << bestSolution.getPerformance() << endl;
+		cout << "#########################################\n" << endl;
+		performanceMoyenneFinale += (double)bestSolution.getPerformance() / (double)nombreRepetitions;
 		Algo::extractSolutionToFile("AlgoRS", repetition, bestSolution, instance);
 	}
-
 }
 
 Solution AlgoRS::trouverVoisin(Solution solution)

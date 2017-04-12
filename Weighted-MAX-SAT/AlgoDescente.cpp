@@ -15,12 +15,16 @@ AlgoDescente::AlgoDescente(int nbEvaluationMax, int nbRepetitions)
 	nombreEvaluationMax = nbEvaluationMax;
 	nombreRepetitions = nbRepetitions;
 	compteurEvaluation = 0;
+	performanceMoyenneFinale = 0.0;
 }
 
 void AlgoDescente::run(Instance instance)
 {
 	for (int repetition = 1; repetition <= nombreRepetitions; repetition++)
 	{
+		cout << "Instance:" << instance.getNom() << endl;
+		cout << "AlgoDescente--" << "Repetition " << repetition << "--NbEvaluationMax=" << nombreEvaluationMax << endl;
+
 		compteurEvaluation = 0;
 		bool stop = false;
 		Solution bestSolution = generateRandomSolution(instance.getNombreVariables());
@@ -40,7 +44,7 @@ void AlgoDescente::run(Instance instance)
 			{
 				stop = true;
 			}
-
+			/*
 			cout << "#########################################" << endl;
 			cout << "#########################################" << endl;
 			bestSolution.afficherSolution(false);
@@ -51,7 +55,12 @@ void AlgoDescente::run(Instance instance)
 			cout << "Nombre d'evaluations: " << compteurEvaluation << endl;
 			cout << "#########################################" << endl;
 			cout << "#########################################" << endl;
+			*/
 		}
+		cout << "#########################################" << endl;
+		cout << "Meilleure Performance de la repetition: " << bestSolution.getPerformance() << endl;
+		cout << "#########################################\n" << endl;
+		performanceMoyenneFinale += (double)bestSolution.getPerformance() / (double)nombreRepetitions;
 		Algo::extractSolutionToFile("AlgoDescente", repetition, bestSolution, instance);
 	}
 }

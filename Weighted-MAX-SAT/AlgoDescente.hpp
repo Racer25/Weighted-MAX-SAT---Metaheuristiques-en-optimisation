@@ -1,3 +1,4 @@
+/*#pragma once*/
 #ifndef DEF_H_ALGODESCENTE
 #define DEF_H_ALGODESCENTE
 #include "Algo.hpp" // A inclure pour pouvoir en hériter !

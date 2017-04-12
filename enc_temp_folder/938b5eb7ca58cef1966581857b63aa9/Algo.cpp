@@ -20,6 +20,9 @@ uniform_int_distribution<int> distributionUniforme(0, 1);
 Solution Algo::generateRandomSolution(int nombreVariables)
 {
 	vector<Literal> litteraux(nombreVariables);
+	int tab[2];
+	tab[0] = -1;
+	tab[1] = 1;
 	for (size_t i = 0; i< litteraux.size(); i++)
 	{
 		litteraux[i].numVar = i + 1;

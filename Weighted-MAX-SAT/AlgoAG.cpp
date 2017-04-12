@@ -17,18 +17,21 @@ AlgoAG::AlgoAG(int nbEvaluationMax, int nbRepetitions)
 	nombreEvaluationMax = nbEvaluationMax;
 	nombreRepetitions = nbRepetitions;
 	compteurEvaluation = 0;
+	performanceMoyenneFinale = 0.0;
 }
 
 void AlgoAG::run(Instance instance)
 {
 	for (int repetition = 1; repetition <= nombreRepetitions; repetition++)
 	{
+		cout << "Instance: " << instance.getNom() << endl;
+		cout << "AlgoGenetique--" << "Repetition " << repetition << "--NbEvaluationMax=" << nombreEvaluationMax << endl;
 		compteurEvaluation = 0;
 		bool stop = false;
 		//Initialisation
 		int taillePopulation = 50;
-		double probabiliteCroisement = 0.7;
-		double probabiliteMutation = 0.1;
+		double probabiliteCroisement = 0.8;
+		double probabiliteMutation = 0.2;
 		int nombreEnfants = (int)(taillePopulation*probabiliteCroisement);
 
 		//Création d'une population
@@ -45,7 +48,7 @@ void AlgoAG::run(Instance instance)
 		{
 			numGeneration++;
 			vector<Solution> enfants(nombreEnfants);
-			cout << "DEBUT CREATION ENFANTS" << endl;
+			//cout << "DEBUT CREATION ENFANTS" << endl;
 			population = trierPopulation(population);
 			for (int i = 0; i<nombreEnfants; i++)
 			{
@@ -72,7 +75,7 @@ void AlgoAG::run(Instance instance)
 					evaluer(&(enfants[i]), instance);
 				}
 			}
-			cout << "FIN CREATION ENFANTS" << endl;
+			//cout << "FIN CREATION ENFANTS" << endl;
 			//REMPLACEMENT
 			//cout << "DEBUT REMPLACEMENT" << endl;
 			population = remplacementRang(population, enfants);
@@ -83,7 +86,7 @@ void AlgoAG::run(Instance instance)
 			{
 				bestSolution = population[population.size() - 1];
 			}
-
+			/*
 			cout << "#########################################" << endl;
 			cout << "#########################################" << endl;
 			bestSolution.afficherSolution(false);
@@ -91,12 +94,16 @@ void AlgoAG::run(Instance instance)
 			cout << "Nombre d'evaluations: " << compteurEvaluation << endl;
 			cout << "#########################################" << endl;
 			cout << "#########################################" << endl;
-
+			*/
 			if (compteurEvaluation > nombreEvaluationMax)
 			{
 				stop = true;
 			}
 		}
+		cout << "#########################################" << endl;
+		cout << "Meilleure Performance de la repetition: " << bestSolution.getPerformance() << endl;
+		cout << "#########################################\n" << endl;
+		performanceMoyenneFinale += (double)bestSolution.getPerformance() /(double)nombreRepetitions;
 		Algo::extractSolutionToFile("AlgoGenetique", repetition, bestSolution, instance);
 	}
 }
@@ -172,10 +179,10 @@ Solution AlgoAG::selectionParentRang(vector<Solution> population)
 	rangCumulees[0] = 1;
 	for (size_t i = 1; i< rangCumulees.size(); i++)
 	{
-		rangCumulees[i] = rangCumulees[i - 1] + 1;
+		rangCumulees[i] = rangCumulees[i - 1] + i + 1;
 	}
 
-	//On tire int aléatoire entre 0 et somme rang
+	//On tire int aléatoire entre 0 et dernier rang
 	int random =rand() % (rangCumulees[rangCumulees.size() - 1]);
 
 	//Position of the literal to change
@@ -337,7 +344,7 @@ vector<Solution> AlgoAG::remplacementRang(vector<Solution> parents, vector<Solut
 		rangCumulees[0] = 1;
 		for (size_t i = 1; i< rangCumulees.size(); i++)
 		{
-			rangCumulees[i] = rangCumulees[i - 1] + 1;
+			rangCumulees[i] = rangCumulees[i - 1] + i + 1;
 		}
 
 		//On tire int aléatoire entre 0 et somme rang
@@ -377,6 +384,7 @@ vector<Solution*> AlgoAG::valeursVersPointeurs(vector<Solution> population)
 	return populationPointeurs;
 }
 
+//Tri les parents d'une population de la pire à la meilleure performance (de la + petite à la + grande car maximisation)
 vector<Solution> AlgoAG::trierPopulation(vector<Solution> population)
 {
 	vector<Solution> newPop(population);
