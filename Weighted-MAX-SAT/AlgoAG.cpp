@@ -364,26 +364,6 @@ vector<Solution> AlgoAG::remplacementRang(vector<Solution> parents, vector<Solut
 	return prochaineGeneration;
 }
 
-vector<Solution> AlgoAG::pointeursVersValeurs(vector<Solution*> populationPointeurs)
-{
-	vector<Solution> population(populationPointeurs.size());
-	for (size_t i=0; i<population.size(); i++)
-	{
-		population[i] = *(populationPointeurs[i]);
-	}
-	return population;
-}
-
-vector<Solution*> AlgoAG::valeursVersPointeurs(vector<Solution> population)
-{
-	vector<Solution*> populationPointeurs(population.size());
-	for (size_t i = 0; i<population.size(); i++)
-	{
-		Solution solution = *(populationPointeurs[i]);
-	}
-	return populationPointeurs;
-}
-
 //Tri les parents d'une population de la pire à la meilleure performance (de la + petite à la + grande car maximisation)
 vector<Solution> AlgoAG::trierPopulation(vector<Solution> population)
 {

@@ -74,11 +74,14 @@
     <ClInclude Include="AlgoRS.hpp">
       <Filter>Fichiers d%27en-tête\Algos</Filter>
     </ClInclude>
-    <ClInclude Include="sat_io.hpp">
-      <Filter>Fichiers d%27en-tête\utils</Filter>
-    </ClInclude>
     <ClInclude Include="AlgoAG.hpp">
       <Filter>Fichiers d%27en-tête\Algos</Filter>
     </ClInclude>
+    <ClInclude Include="sat_io.hpp">
+      <Filter>Fichiers d%27en-tête\utils</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

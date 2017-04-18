@@ -20,8 +20,6 @@ public:
 	vector<Solution> remplacement(vector<Solution> parents, vector<Solution> enfants);//Prends les enfants et les parents et selectionne les survivants
 	vector<Solution> remplacementRang(vector<Solution> parents, vector<Solution> enfants);//Prends les enfants et les parents et selectionne les survivants
 
-	vector<Solution> pointeursVersValeurs(vector<Solution*> populationPointeurs);
-	vector<Solution*> valeursVersPointeurs(vector<Solution> population);
 	vector<Solution> trierPopulation(vector<Solution> population);
 };
 #endif
