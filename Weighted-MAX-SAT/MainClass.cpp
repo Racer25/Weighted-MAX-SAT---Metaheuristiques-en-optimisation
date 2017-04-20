@@ -41,7 +41,7 @@ int main()
 		algoDescente.run(instances_Weighted_MAX_SAT[i]);
 
 		AlgoAG algoAG(nombreIterationMAX, nombreRepetitions);
-		AlgoAG.run(instances_Weighted_MAX_SAT[i]);
+		algoAG.run(instances_Weighted_MAX_SAT[i]);
 
 		AlgoRS algoRS(nombreIterationMAX, nombreRepetitions);
 		algoRS.run(instances_Weighted_MAX_SAT[i]);
